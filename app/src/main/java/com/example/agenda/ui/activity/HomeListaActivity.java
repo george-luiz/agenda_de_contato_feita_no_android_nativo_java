@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.agenda.R;
 import com.example.agenda.dao.alunoDAO;
 import com.example.agenda.model.Aluno;
@@ -35,24 +36,25 @@ public class HomeListaActivity extends AppCompatActivity {
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
         configuraLista();
-
-        dao.salva(new Aluno("George", "42072348", "geluiz275@gmail.com"));
-        dao.salva(new Aluno("Fram", "4143242142", "geluiz@"));
-        dao.salva(new Aluno("Larissa", "5435", "geluiz275@gmail.com54325"));
-        dao.salva(new Aluno("Yas", "53452", "geluiz275@gmail.comfsfsa"));
+        dao.salva(new Aluno("George", "981635005", "geluiz275@gmail.com"));
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Remover");
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-        remove(alunoEscolhido);
+
+        int itemId = item.getItemId();
+        CharSequence tituloDoMenu = item.getTitle();
+        if (itemId == R.id.activity_lista_alunos_menu_remover) {
+            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+            remove(alunoEscolhido);
+        }
         return super.onContextItemSelected(item);
     }
 
